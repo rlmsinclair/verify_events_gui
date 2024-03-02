@@ -28,10 +28,10 @@ class CsvRowApp(App):
         # Adjusted the container height to accommodate larger buttons
         self.action_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
-        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=None, height=200, font_size='32sp')
-        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=None, height=200, font_size='32sp')
-        self.action_buttons_container.add_widget(self.correct_button)
-        self.action_buttons_container.add_widget(self.incorrect_button)
+        self.isEvent_button = Button(text="isEvent", on_press=self.mark_isEvent, size_hint_y=None, height=200, font_size='32sp')
+        self.isNotEvent_button = Button(text="isNotEvent", on_press=self.mark_isNotEvent, size_hint_y=None, height=200, font_size='32sp')
+        self.action_buttons_container.add_widget(self.isEvent_button)
+        self.action_buttons_container.add_widget(self.isNotEvent_button)
 
         self.row_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
@@ -65,7 +65,7 @@ class CsvRowApp(App):
             writer = csv.writer(file)
             writer.writerows(self.csv_data)
 
-    def mark_correct(self, instance):
+    def mark_isEvent(self, instance):
         # Ensure the current row is within the bounds of the CSV data
         if 0 <= self.current_row < len(self.csv_data):
             # Check if the current row has less than 6 columns
@@ -73,11 +73,11 @@ class CsvRowApp(App):
                 # If so, extend the row with empty values up to the 6th column
                 self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
             # Set the 6th column (index 5) to "correct"
-            self.csv_data[self.current_row][5] = "correct"
+            self.csv_data[self.current_row][5] = "isEvent"
             # Update the CSV file with the modified data
             self.update_csv()
 
-    def mark_incorrect(self, instance):
+    def mark_isNotEvent(self, instance):
         # Ensure the current row is within the bounds of the CSV data
         if 0 <= self.current_row < len(self.csv_data):
             # Check if the current row has less than 6 columns
@@ -85,7 +85,7 @@ class CsvRowApp(App):
                 # If so, extend the row with empty values up to the 6th column
                 self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
             # Set the 6th column (index 5) to "incorrect"
-            self.csv_data[self.current_row][5] = "incorrect"
+            self.csv_data[self.current_row][5] = "isNotEvent"
             # Update the CSV file with the modified data
             self.update_csv()
 
