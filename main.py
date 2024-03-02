@@ -25,14 +25,25 @@ class CsvRowApp(App):
 
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Adjust size and height here for "Correct" and "Incorrect" buttons
-        self.buttons_container = BoxLayout(size_hint_y=None, height=100)  # Adjusted container height
-        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=2, height=50, font_size='20sp')
-        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=2, height=50, font_size='20sp')
-        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=2, height=50, font_size='20sp')
+        # Navigation buttons container
+        # self.nav_buttons_container = BoxLayout(size_hint_y=None, height=50)
+        # self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=50, font_size='20sp')
+        # self.nav_buttons_container.add_widget(self.previous_row_button)
 
-        self.buttons_container.add_widget(self.correct_button)
-        self.buttons_container.add_widget(self.incorrect_button)
+        # Action buttons container
+        self.action_buttons_container = BoxLayout(size_hint_y=None, height=60)
+        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=None, height=50, font_size='20sp')
+        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=None, height=50, font_size='20sp')
+        self.action_buttons_container.add_widget(self.correct_button)
+        self.action_buttons_container.add_widget(self.incorrect_button)
+
+        self.row_buttons_container = BoxLayout(size_hint_y=None, height=60)
+        self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=50,
+                                          font_size='20sp')
+        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=None, height=50,
+                                      font_size='20sp')
+        self.row_buttons_container.add_widget(self.previous_row_button)
+        self.row_buttons_container.add_widget(self.next_row_button)
 
         self.labels_container = BoxLayout(orientation='vertical', size_hint_y=None, padding=(10, 10))
         self.labels_container.bind(minimum_height=self.labels_container.setter('height'))
@@ -41,8 +52,9 @@ class CsvRowApp(App):
         self.scroll_view.add_widget(self.labels_container)
 
         self.root.add_widget(self.scroll_view)
-        self.root.add_widget(self.buttons_container)
-        self.root.add_widget(self.next_row_button)
+        self.root.add_widget(self.action_buttons_container)
+        self.root.add_widget(self.row_buttons_container)
+
 
         self.update_labels(self.current_row)
 
@@ -105,8 +117,15 @@ class CsvRowApp(App):
         if self.current_row < len(self.csv_data):
             self.update_labels(self.current_row)
         else:
+            self.current_row = len(self.csv_data) - 1  # Prevent going beyond the last row
             self.next_row_button.disabled = True
-            # Optionally disable the Correct/Incorrect buttons here as well
+        self.previous_row_button.disabled = False
+
+    def previous_row(self, instance):
+        if self.current_row > 0:
+            self.current_row -= 1
+            self.update_labels(self.current_row)
+            self.next_row_button.disabled = False
 
 if __name__ == '__main__':
     CsvRowApp().run()
