@@ -25,23 +25,18 @@ class CsvRowApp(App):
 
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Navigation buttons container
-        # self.nav_buttons_container = BoxLayout(size_hint_y=None, height=50)
-        # self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=50, font_size='20sp')
-        # self.nav_buttons_container.add_widget(self.previous_row_button)
-
-        # Action buttons container
-        self.action_buttons_container = BoxLayout(size_hint_y=None, height=60)
-        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=None, height=50, font_size='20sp')
-        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=None, height=50, font_size='20sp')
+        # Adjusted the container height to accommodate larger buttons
+        self.action_buttons_container = BoxLayout(size_hint_y=None, height=80)
+        # Increased button height and font size
+        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=None, height=70, font_size='32sp')
+        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=None, height=70, font_size='32sp')
         self.action_buttons_container.add_widget(self.correct_button)
         self.action_buttons_container.add_widget(self.incorrect_button)
 
-        self.row_buttons_container = BoxLayout(size_hint_y=None, height=60)
-        self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=50,
-                                          font_size='20sp')
-        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=None, height=50,
-                                      font_size='20sp')
+        self.row_buttons_container = BoxLayout(size_hint_y=None, height=80)
+        # Increased button height and font size
+        self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=70, font_size='32sp')
+        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=None, height=70, font_size='32sp')
         self.row_buttons_container.add_widget(self.previous_row_button)
         self.row_buttons_container.add_widget(self.next_row_button)
 
@@ -54,7 +49,6 @@ class CsvRowApp(App):
         self.root.add_widget(self.scroll_view)
         self.root.add_widget(self.action_buttons_container)
         self.root.add_widget(self.row_buttons_container)
-
 
         self.update_labels(self.current_row)
 
