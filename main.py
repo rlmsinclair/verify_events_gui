@@ -26,17 +26,17 @@ class CsvRowApp(App):
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
         # Adjusted the container height to accommodate larger buttons
-        self.action_buttons_container = BoxLayout(size_hint_y=None, height=110)
+        self.action_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
-        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=None, height=100, font_size='32sp')
-        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=None, height=100, font_size='32sp')
+        self.correct_button = Button(text="Correct", on_press=self.mark_correct, size_hint_y=None, height=200, font_size='32sp')
+        self.incorrect_button = Button(text="Incorrect", on_press=self.mark_incorrect, size_hint_y=None, height=200, font_size='32sp')
         self.action_buttons_container.add_widget(self.correct_button)
         self.action_buttons_container.add_widget(self.incorrect_button)
 
-        self.row_buttons_container = BoxLayout(size_hint_y=None, height=110)
+        self.row_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
-        self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=100, font_size='32sp')
-        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=None, height=100, font_size='32sp')
+        self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=200, font_size='32sp')
+        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=None, height=200, font_size='32sp')
         self.row_buttons_container.add_widget(self.previous_row_button)
         self.row_buttons_container.add_widget(self.next_row_button)
 
