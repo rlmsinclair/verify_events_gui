@@ -97,7 +97,7 @@ class CsvRowApp(App):
                 if re.match(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\'(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', item):
                     label = ClickableLabel(text=item, font_size='20sp', color=(0, 0, 1, 1), size_hint_y=None,
                                            halign='left', valign='top')
-                elif i == 5:
+                elif i == 4:
                     label = Label(text='AI thinks: ' + item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 else:
                     label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
