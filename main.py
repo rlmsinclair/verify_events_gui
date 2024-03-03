@@ -24,7 +24,7 @@ class CsvRowApp(App):
         self.current_row = 0
         for i in range(len(self.csv_data)):
             try:
-                if self.csv_data[i][5] == 'isEvent' or self.csv_data[i][5] == 'isNotEvent':
+                if self.csv_data[i][7] == 'isEvent' or self.csv_data[i][7] == 'isNotEvent':
                     self.current_row = i
             except:
                 pass
@@ -77,11 +77,11 @@ class CsvRowApp(App):
         # Ensure the current row is within the bounds of the CSV data
         if 0 <= self.current_row < len(self.csv_data):
             # Check if the current row has less than 6 columns
-            if len(self.csv_data[self.current_row]) < 6:
+            if len(self.csv_data[self.current_row]) < 8:
                 # If so, extend the row with empty values up to the 6th column
-                self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
+                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
             # Set the 6th column (index 5) to "correct"
-            self.csv_data[self.current_row][5] = "isEvent"
+            self.csv_data[self.current_row][7] = "isEvent"
             # Update the CSV file with the modified data
             self.update_csv()
             self.update_labels(self.current_row)
@@ -90,11 +90,11 @@ class CsvRowApp(App):
         # Ensure the current row is within the bounds of the CSV data
         if 0 <= self.current_row < len(self.csv_data):
             # Check if the current row has less than 6 columns
-            if len(self.csv_data[self.current_row]) < 6:
+            if len(self.csv_data[self.current_row]) < 8:
                 # If so, extend the row with empty values up to the 6th column
-                self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
+                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
             # Set the 6th column (index 5) to "incorrect"
-            self.csv_data[self.current_row][5] = "isNotEvent"
+            self.csv_data[self.current_row][7] = "isNotEvent"
             # Update the CSV file with the modified data
             self.update_csv()
             self.update_labels(self.current_row)
@@ -108,7 +108,7 @@ class CsvRowApp(App):
                     label = ClickableLabel(text=item, font_size='20sp', color=(0, 0, 1, 1), size_hint_y=None,
                                            halign='left', valign='top')
                 elif i == 4:
-                    label = Label(text='AI thinks: ' + item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
+                    label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 else:
                     label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 label_width = self.scroll_view.width - 2 * self.labels_container.padding[0] - 20
