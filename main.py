@@ -9,6 +9,9 @@ import csv
 import re
 import webbrowser
 
+PATH_TO_CSV = 'data.csv'  # Path to the csv file
+ONLY_SHOW_ISEVENT = True  # This will only show instagram captions that at least one of the AIs thinks is an event
+
 class ClickableLabel(ButtonBehavior, Label):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -19,7 +22,7 @@ class ClickableLabel(ButtonBehavior, Label):
 
 class CsvRowApp(App):
     def build(self):
-        self.csv_file = 'data.csv'  # Ensure this is the correct path to your CSV file
+        self.csv_file = PATH_TO_CSV  # Ensure this is the correct path to your CSV file
         self.csv_data = self.read_csv(self.csv_file)
         self.current_row = 0
         for i in range(len(self.csv_data)):
@@ -76,11 +79,11 @@ class CsvRowApp(App):
     def mark_isEvent(self, instance):
         # Ensure the current row is within the bounds of the CSV data
         if 0 <= self.current_row < len(self.csv_data):
-            # Check if the current row has less than 6 columns
+            # Check if the current row has less than 8 columns
             if len(self.csv_data[self.current_row]) < 8:
-                # If so, extend the row with empty values up to the 6th column
+                # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            # Set the 6th column (index 5) to "correct"
+            # Set the 8th column (index 5) to "isEvent"
             self.csv_data[self.current_row][7] = "isEvent"
             # Update the CSV file with the modified data
             self.update_csv()
@@ -119,19 +122,43 @@ class CsvRowApp(App):
             self.labels_container.add_widget(Label(text='End of file reached!', font_size='20sp'))
 
     def next_row(self, instance):
-        self.current_row += 1
-        if self.current_row < len(self.csv_data):
-            self.update_labels(self.current_row)
+        if ONLY_SHOW_ISEVENT:
+            for i in range(self.current_row + 1, len(self.csv_data)):
+                if 'isEvent' in self.csv_data[i][4] or 'isEvent' in self.csv_data[i][5] or 'isEvent' in self.csv_data[6]:
+                    self.current_row = i
+                    if self.current_row < len(self.csv_data):
+                        self.update_labels(self.current_row)
+                    else:
+                        self.current_row = len(self.csv_data) - 1  # Prevent going beyond the last row
+                        self.next_row_button.disabled = True
+                    self.previous_row_button.disabled = False
+                    break
         else:
-            self.current_row = len(self.csv_data) - 1  # Prevent going beyond the last row
-            self.next_row_button.disabled = True
-        self.previous_row_button.disabled = False
+            self.current_row += 1
+            if self.current_row < len(self.csv_data):
+                self.update_labels(self.current_row)
+            else:
+                self.current_row = len(self.csv_data) - 1  # Prevent going beyond the last row
+                self.next_row_button.disabled = True
+            self.previous_row_button.disabled = False
 
     def previous_row(self, instance):
-        if self.current_row > 0:
-            self.current_row -= 1
-            self.update_labels(self.current_row)
-            self.next_row_button.disabled = False
+        if ONLY_SHOW_ISEVENT:
+            for i in range(self.current_row - 1, -1, -1):
+                if 'isEvent' in self.csv_data[i][4] or 'isEvent' in self.csv_data[i][5] or 'isEvent' in self.csv_data[6]:
+                    self.current_row = i
+                    if self.current_row < len(self.csv_data):
+                        self.update_labels(self.current_row)
+                    else:
+                        self.current_row = len(self.csv_data) - 1  # Prevent going beyond the last row
+                        self.next_row_button.disabled = True
+                    self.previous_row_button.disabled = False
+                    break
+        else:
+            if self.current_row > 0:
+                self.current_row -= 1
+                self.update_labels(self.current_row)
+                self.next_row_button.disabled = False
 
 if __name__ == '__main__':
     CsvRowApp().run()
