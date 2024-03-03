@@ -92,11 +92,13 @@ class CsvRowApp(App):
     def update_labels(self, row_index):
         self.labels_container.clear_widgets()
         if row_index < len(self.csv_data):
-            for item in self.csv_data[row_index]:
+            for i, item in enumerate(self.csv_data[row_index]):
                 # Check if the item is a hyperlink
                 if re.match(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\'(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', item):
                     label = ClickableLabel(text=item, font_size='20sp', color=(0, 0, 1, 1), size_hint_y=None,
                                            halign='left', valign='top')
+                elif i == 5:
+                    label = Label(text='AI thinks: ' + item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 else:
                     label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 label_width = self.scroll_view.width - 2 * self.labels_container.padding[0] - 20
