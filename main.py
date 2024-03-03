@@ -84,6 +84,7 @@ class CsvRowApp(App):
             self.csv_data[self.current_row][5] = "isEvent"
             # Update the CSV file with the modified data
             self.update_csv()
+            self.update_labels(self.current_row)
 
     def mark_isNotEvent(self, instance):
         # Ensure the current row is within the bounds of the CSV data
@@ -96,6 +97,7 @@ class CsvRowApp(App):
             self.csv_data[self.current_row][5] = "isNotEvent"
             # Update the CSV file with the modified data
             self.update_csv()
+            self.update_labels(self.current_row)
 
     def update_labels(self, row_index):
         self.labels_container.clear_widgets()
