@@ -22,6 +22,14 @@ class CsvRowApp(App):
         self.csv_file = 'data.csv'  # Ensure this is the correct path to your CSV file
         self.csv_data = self.read_csv(self.csv_file)
         self.current_row = 0
+        for i in range(len(self.csv_data)):
+            try:
+                if self.csv_data[i][5] == 'isEvent' or self.csv_data[i][5] == 'isNotEvent':
+                    self.current_row = i
+            except:
+                pass
+
+
 
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
@@ -43,7 +51,7 @@ class CsvRowApp(App):
         self.labels_container = BoxLayout(orientation='vertical', size_hint_y=None, padding=(10, 10))
         self.labels_container.bind(minimum_height=self.labels_container.setter('height'))
 
-        self.scroll_view = ScrollView(size_hint=(1, None), size=(Window.width, Window.height * 0.8))
+        self.scroll_view = ScrollView(size_hint=(1, 1), size=(Window.width, Window.height * 0.8))
         self.scroll_view.add_widget(self.labels_container)
 
         self.root.add_widget(self.scroll_view)
