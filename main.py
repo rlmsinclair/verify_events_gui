@@ -43,8 +43,8 @@ class CsvRowApp(App):
 
         self.row_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
-        self.previous_row_button = Button(text="Previous Row", on_press=self.previous_row, size_hint_y=None, height=200, font_size='32sp')
-        self.next_row_button = Button(text='Next Row', on_press=self.next_row, size_hint_y=None, height=200, font_size='32sp')
+        self.previous_row_button = Button(text="Previous", on_press=self.previous_row, size_hint_y=None, height=200, font_size='32sp')
+        self.next_row_button = Button(text='Next', on_press=self.next_row, size_hint_y=None, height=200, font_size='32sp')
         self.row_buttons_container.add_widget(self.previous_row_button)
         self.row_buttons_container.add_widget(self.next_row_button)
 
