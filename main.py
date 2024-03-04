@@ -9,8 +9,8 @@ import csv
 import re
 import webbrowser
 
-PATH_TO_CSV = 'data.csv'  # Path to the csv file
-ONLY_SHOW_ISEVENT = True  # This will only show instagram captions that at least one of the AIs thinks is an event
+PATH_TO_CSV = '1000data.csv'  # Path to the csv file
+ONLY_SHOW_ISEVENT = False  # This will only show instagram captions that at least one of the AIs thinks is an event
 
 class ClickableLabel(ButtonBehavior, Label):
     def __init__(self, **kwargs):
@@ -36,13 +36,44 @@ class CsvRowApp(App):
 
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Adjusted the container height to accommodate larger buttons
-        self.action_buttons_container = BoxLayout(size_hint_y=None, height=210)
-        # Increased button height and font size
-        self.isEvent_button = Button(text="isEvent", on_press=self.mark_isEvent, size_hint_y=None, height=200, font_size='32sp')
-        self.isNotEvent_button = Button(text="isNotEvent", on_press=self.mark_isNotEvent, size_hint_y=None, height=200, font_size='32sp')
-        self.action_buttons_container.add_widget(self.isEvent_button)
-        self.action_buttons_container.add_widget(self.isNotEvent_button)
+        self.action_buttons_container = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
+
+        # Define new buttons
+        self.invites_button = Button(text="Invites", on_press=self.mark_invites, size_hint_y=None, height=80,
+                                     font_size='24sp')
+        self.date_button = Button(text="Date", on_press=self.mark_date, size_hint_y=None, height=80, font_size='24sp')
+        self.location_button = Button(text="Location", on_press=self.mark_location, size_hint_y=None, height=80,
+                                      font_size='24sp')
+        self.loose_button = Button(text="Loose", on_press=self.mark_loose, size_hint_y=None, height=80,
+                                   font_size='24sp')
+        self.future_button = Button(text="Future", on_press=self.mark_future, size_hint_y=None, height=80,
+                                    font_size='24sp')
+
+        # Add new buttons to the container
+        for button in [self.invites_button, self.date_button, self.location_button, self.loose_button,
+                       self.future_button]:
+            self.action_buttons_container.add_widget(button)
+
+
+
+
+        self.no_action_buttons_container = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
+
+        # Define new buttons
+        self.no_invites_button = Button(text="No Invites", on_press=self.no_mark_invites, size_hint_y=None, height=80,
+                                     font_size='24sp')
+        self.no_date_button = Button(text="No Date", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='24sp')
+        self.no_location_button = Button(text="No Location", on_press=self.no_mark_location, size_hint_y=None, height=80,
+                                      font_size='24sp')
+        self.no_loose_button = Button(text="No Loose", on_press=self.no_mark_loose, size_hint_y=None, height=80,
+                                   font_size='24sp')
+        self.no_future_button = Button(text="No Future", on_press=self.no_mark_future, size_hint_y=None, height=80,
+                                    font_size='24sp')
+
+        # Add new buttons to the container
+        for button in [self.no_invites_button, self.no_date_button, self.no_location_button, self.no_loose_button,
+                       self.no_future_button]:
+            self.no_action_buttons_container.add_widget(button)
 
         self.row_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
@@ -59,6 +90,7 @@ class CsvRowApp(App):
 
         self.root.add_widget(self.scroll_view)
         self.root.add_widget(self.action_buttons_container)
+        self.root.add_widget(self.no_action_buttons_container)
         self.root.add_widget(self.row_buttons_container)
 
         self.update_labels(self.current_row)
@@ -76,31 +108,97 @@ class CsvRowApp(App):
             writer = csv.writer(file)
             writer.writerows(self.csv_data)
 
-    def mark_isEvent(self, instance):
-        # Ensure the current row is within the bounds of the CSV data
+    def mark_invites(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            # Check if the current row has less than 8 columns
-            if len(self.csv_data[self.current_row]) < 8:
+            if len(self.csv_data[self.current_row]) < 5:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            # Set the 8th column (index 5) to "isEvent"
-            self.csv_data[self.current_row][7] = "isEvent"
-            # Update the CSV file with the modified data
+                self.csv_data[self.current_row].extend([""] * (5 - len(self.csv_data[self.current_row])))
+        self.csv_data[self.current_row][4] = "invites"
+        self.update_csv()
+        self.update_labels(self.current_row)
+
+    def mark_date(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 6:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][5] = "date"
             self.update_csv()
             self.update_labels(self.current_row)
 
-    def mark_isNotEvent(self, instance):
-        # Ensure the current row is within the bounds of the CSV data
+    def mark_location(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            # Check if the current row has less than 6 columns
-            if len(self.csv_data[self.current_row]) < 8:
-                # If so, extend the row with empty values up to the 6th column
-                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            # Set the 6th column (index 5) to "incorrect"
-            self.csv_data[self.current_row][7] = "isNotEvent"
-            # Update the CSV file with the modified data
+            if len(self.csv_data[self.current_row]) < 7:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (7 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][6] = "location"
             self.update_csv()
             self.update_labels(self.current_row)
+
+    def mark_loose(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 8:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][7] = "loose"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+    def mark_future(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 9:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (9 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][8] = "future"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+
+    def no_mark_invites(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 5:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (5 - len(self.csv_data[self.current_row])))
+        self.csv_data[self.current_row][4] = "no invites"
+        self.update_csv()
+        self.update_labels(self.current_row)
+
+    def no_mark_date(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 6:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][5] = "no date"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+    def no_mark_location(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 7:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (7 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][6] = "no location"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+    def no_mark_loose(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 8:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][7] = "no loose"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+    def no_mark_future(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 9:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (9 - len(self.csv_data[self.current_row])))
+            self.csv_data[self.current_row][8] = "no future"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
 
     def update_labels(self, row_index):
         self.labels_container.clear_widgets()
@@ -110,8 +208,8 @@ class CsvRowApp(App):
                 if re.match(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\'(),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', item):
                     label = ClickableLabel(text=item, font_size='20sp', color=(0, 0, 1, 1), size_hint_y=None,
                                            halign='left', valign='top')
-                elif i == 4:
-                    label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
+                # elif i == 4:
+                #     label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 else:
                     label = Label(text=item, font_size='20sp', size_hint_y=None, halign='left', valign='top')
                 label_width = self.scroll_view.width - 2 * self.labels_container.padding[0] - 20
