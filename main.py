@@ -40,14 +40,14 @@ class CsvRowApp(App):
 
         # Define new buttons
         self.invites_button = Button(text="Inv", on_press=self.mark_invites, size_hint_y=None, height=80,
-                                     font_size='24sp')
-        self.date_button = Button(text="Dat", on_press=self.mark_date, size_hint_y=None, height=80, font_size='24sp')
+                                     font_size='20sp')
+        self.date_button = Button(text="Dat", on_press=self.mark_date, size_hint_y=None, height=80, font_size='20sp')
         self.location_button = Button(text="Loc", on_press=self.mark_location, size_hint_y=None, height=80,
-                                      font_size='24sp')
+                                      font_size='20sp')
         self.loose_button = Button(text="Tun", on_press=self.mark_loose, size_hint_y=None, height=80,
-                                   font_size='24sp')
+                                   font_size='20sp')
         self.future_button = Button(text="Fut", on_press=self.mark_future, size_hint_y=None, height=80,
-                                    font_size='24sp')
+                                    font_size='20sp')
 
         # Add new buttons to the container
         for button in [self.invites_button, self.date_button, self.location_button, self.loose_button,
@@ -61,14 +61,14 @@ class CsvRowApp(App):
 
         # Define new buttons
         self.no_invites_button = Button(text="NoInv", on_press=self.no_mark_invites, size_hint_y=None, height=80,
-                                     font_size='24sp')
-        self.no_date_button = Button(text="NoDat", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='24sp')
+                                     font_size='20sp')
+        self.no_date_button = Button(text="NoDat", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='20sp')
         self.no_location_button = Button(text="NoLoc", on_press=self.no_mark_location, size_hint_y=None, height=80,
-                                      font_size='24sp')
+                                      font_size='20sp')
         self.no_loose_button = Button(text="NoTun", on_press=self.no_mark_loose, size_hint_y=None, height=80,
-                                   font_size='24sp')
+                                   font_size='20sp')
         self.no_future_button = Button(text="NoFut", on_press=self.no_mark_future, size_hint_y=None, height=80,
-                                    font_size='24sp')
+                                    font_size='20sp')
 
         # Add new buttons to the container
         for button in [self.no_invites_button, self.no_date_button, self.no_location_button, self.no_loose_button,
