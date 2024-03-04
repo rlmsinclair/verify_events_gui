@@ -44,7 +44,7 @@ class CsvRowApp(App):
         self.date_button = Button(text="Dat", on_press=self.mark_date, size_hint_y=None, height=80, font_size='24sp')
         self.location_button = Button(text="Loc", on_press=self.mark_location, size_hint_y=None, height=80,
                                       font_size='24sp')
-        self.loose_button = Button(text="Loose", on_press=self.mark_loose, size_hint_y=None, height=80,
+        self.loose_button = Button(text="Tun", on_press=self.mark_loose, size_hint_y=None, height=80,
                                    font_size='24sp')
         self.future_button = Button(text="Fut", on_press=self.mark_future, size_hint_y=None, height=80,
                                     font_size='24sp')
@@ -65,7 +65,7 @@ class CsvRowApp(App):
         self.no_date_button = Button(text="NoDat", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='24sp')
         self.no_location_button = Button(text="NoLoc", on_press=self.no_mark_location, size_hint_y=None, height=80,
                                       font_size='24sp')
-        self.no_loose_button = Button(text="NoLoose", on_press=self.no_mark_loose, size_hint_y=None, height=80,
+        self.no_loose_button = Button(text="NoTun", on_press=self.no_mark_loose, size_hint_y=None, height=80,
                                    font_size='24sp')
         self.no_future_button = Button(text="NoFut", on_press=self.no_mark_future, size_hint_y=None, height=80,
                                     font_size='24sp')
@@ -140,7 +140,7 @@ class CsvRowApp(App):
             if len(self.csv_data[self.current_row]) < 8:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][7] = "loose"
+            self.csv_data[self.current_row][7] = "stay tuned"
             self.update_csv()
             self.update_labels(self.current_row)
 
@@ -186,7 +186,7 @@ class CsvRowApp(App):
             if len(self.csv_data[self.current_row]) < 8:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][7] = "no loose"
+            self.csv_data[self.current_row][7] = "no stay tuned"
             self.update_csv()
             self.update_labels(self.current_row)
 
