@@ -39,14 +39,14 @@ class CsvRowApp(App):
         self.action_buttons_container = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
 
         # Define new buttons
-        self.invites_button = Button(text="Invites", on_press=self.mark_invites, size_hint_y=None, height=80,
+        self.invites_button = Button(text="Inv", on_press=self.mark_invites, size_hint_y=None, height=80,
                                      font_size='24sp')
-        self.date_button = Button(text="Date", on_press=self.mark_date, size_hint_y=None, height=80, font_size='24sp')
-        self.location_button = Button(text="Location", on_press=self.mark_location, size_hint_y=None, height=80,
+        self.date_button = Button(text="Dat", on_press=self.mark_date, size_hint_y=None, height=80, font_size='24sp')
+        self.location_button = Button(text="Loc", on_press=self.mark_location, size_hint_y=None, height=80,
                                       font_size='24sp')
         self.loose_button = Button(text="Loose", on_press=self.mark_loose, size_hint_y=None, height=80,
                                    font_size='24sp')
-        self.future_button = Button(text="Future", on_press=self.mark_future, size_hint_y=None, height=80,
+        self.future_button = Button(text="Fut", on_press=self.mark_future, size_hint_y=None, height=80,
                                     font_size='24sp')
 
         # Add new buttons to the container
@@ -60,14 +60,14 @@ class CsvRowApp(App):
         self.no_action_buttons_container = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
 
         # Define new buttons
-        self.no_invites_button = Button(text="No Invites", on_press=self.no_mark_invites, size_hint_y=None, height=80,
+        self.no_invites_button = Button(text="NoInv", on_press=self.no_mark_invites, size_hint_y=None, height=80,
                                      font_size='24sp')
-        self.no_date_button = Button(text="No Date", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='24sp')
-        self.no_location_button = Button(text="No Location", on_press=self.no_mark_location, size_hint_y=None, height=80,
+        self.no_date_button = Button(text="NoDat", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='24sp')
+        self.no_location_button = Button(text="NoLoc", on_press=self.no_mark_location, size_hint_y=None, height=80,
                                       font_size='24sp')
-        self.no_loose_button = Button(text="No Loose", on_press=self.no_mark_loose, size_hint_y=None, height=80,
+        self.no_loose_button = Button(text="NoLoose", on_press=self.no_mark_loose, size_hint_y=None, height=80,
                                    font_size='24sp')
-        self.no_future_button = Button(text="No Future", on_press=self.no_mark_future, size_hint_y=None, height=80,
+        self.no_future_button = Button(text="NoFut", on_press=self.no_mark_future, size_hint_y=None, height=80,
                                     font_size='24sp')
 
         # Add new buttons to the container
