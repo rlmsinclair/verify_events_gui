@@ -36,22 +36,22 @@ class CsvRowApp(App):
 
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        self.action_buttons_container_top = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
-        self.action_buttons_container_bottom = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
+        self.action_buttons_container_top = BoxLayout(size_hint_y=None, height=100)  # Adjusted height for more buttons
+        self.action_buttons_container_bottom = BoxLayout(size_hint_y=None, height=100)  # Adjusted height for more buttons
 
 
         # Define new buttons
 
-        self.is_event_button = Button(text="Event", on_press=self.mark_is_event, size_hint_y=None, height=80,
+        self.is_event_button = Button(text="Event", on_press=self.mark_is_event, size_hint_y=None, height=100,
                                      font_size='20sp')
-        self.invites_button = Button(text="Invites", on_press=self.mark_invites, size_hint_y=None, height=80,
+        self.invites_button = Button(text="Invites", on_press=self.mark_invites, size_hint_y=None, height=100,
                                      font_size='20sp')
-        self.date_button = Button(text="Date", on_press=self.mark_date, size_hint_y=None, height=80, font_size='20sp')
-        self.time_button = Button(text="Time", on_press=self.mark_time, size_hint_y=None, height=80, font_size='20sp')
+        self.date_button = Button(text="Date", on_press=self.mark_date, size_hint_y=None, height=100, font_size='20sp')
+        self.time_button = Button(text="Time", on_press=self.mark_time, size_hint_y=None, height=100, font_size='20sp')
 
-        self.location_button = Button(text="Location", on_press=self.mark_location, size_hint_y=None, height=80,
+        self.location_button = Button(text="Location", on_press=self.mark_location, size_hint_y=None, height=100,
                                       font_size='20sp')
-        self.future_button = Button(text="Future", on_press=self.mark_future, size_hint_y=None, height=80,
+        self.future_button = Button(text="Future", on_press=self.mark_future, size_hint_y=None, height=100,
                                     font_size='20sp')
 
         # Add new buttons to the container
