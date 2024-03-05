@@ -11,7 +11,8 @@ import webbrowser
 
 PATH_TO_CSV = '1000data.csv'  # Path to the csv file
 ONLY_SHOW_ISEVENT = False  # This will only show instagram captions that at least one of the AIs thinks is an event
-HEIGHT_OF_BUTTONS = 135  # Change this if you have fat fingers
+HEIGHT_OF_BUTTONS = 200  # Change this if you have fat fingers
+COLUMN_TO_APPEND_TO_STARTS_AT = 5 # Change this if you are using a CSV with a different number of columns
 
 class ClickableLabel(ButtonBehavior, Label):
     def __init__(self, **kwargs):
@@ -97,73 +98,73 @@ class CsvRowApp(App):
 
     def mark_is_event(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 5:
+            if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (5 - len(self.csv_data[self.current_row])))
-        if self.csv_data[self.current_row][4] == "event":
-            self.csv_data[self.current_row][4] = "no_event"
+                self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT - len(self.csv_data[self.current_row])))
+        if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] == "event":
+            self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] = "no_event"
         else:
-            self.csv_data[self.current_row][4] = "event"
+            self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] = "event"
         self.update_csv()
         self.update_labels(self.current_row)
 
     def mark_invites(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 6:
+            if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+1:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][5] == "invites":
-                self.csv_data[self.current_row][5] = "no_invites"
+                self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 1 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] == "invites":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] = "no_invites"
             else:
-                self.csv_data[self.current_row][5] = "invites"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] = "invites"
             self.update_csv()
             self.update_labels(self.current_row)
 
     def mark_date(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 7:
+            if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+2:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (7 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][6] == "date":
-                self.csv_data[self.current_row][6] = "no_date"
+                self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 2 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 1] == "date":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 1] = "no_date"
             else:
-                self.csv_data[self.current_row][6] = "date"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 1] = "date"
             self.update_csv()
             self.update_labels(self.current_row)
 
     def mark_time(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 8:
+            if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+3:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][7] == "time":
-                self.csv_data[self.current_row][7] = "no_time"
+                self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 3 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 2] == "time":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 2] = "no_time"
             else:
-                self.csv_data[self.current_row][7] = "time"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 2] = "time"
             self.update_csv()
             self.update_labels(self.current_row)
 
     def mark_location(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 9:
+            if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+4:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (9 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][8] == "location":
-                self.csv_data[self.current_row][8] = "no_location"
+                self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 4 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 3] == "location":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 3] = "no_location"
             else:
-                self.csv_data[self.current_row][8] = "location"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 3] = "location"
             self.update_csv()
             self.update_labels(self.current_row)
 
     def mark_future(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 10:
+            if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+5:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (10 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][9] == "future":
-                self.csv_data[self.current_row][9] = "no_future"
+                self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 5 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] == "future":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] = "no_future"
             else:
-                self.csv_data[self.current_row][9] = "future"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] = "future"
             self.update_csv()
             self.update_labels(self.current_row)
 
