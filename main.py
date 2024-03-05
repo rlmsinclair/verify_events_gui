@@ -27,7 +27,7 @@ class CsvRowApp(App):
         self.current_row = 0
         for i in range(len(self.csv_data)):
             try:
-                if self.csv_data[i][7] == 'isEvent' or self.csv_data[i][7] == 'isNotEvent':
+                if self.csv_data[i][4] == 'event' or self.csv_data[i][4] == 'no_event':
                     self.current_row = i
             except:
                 pass
@@ -36,44 +36,30 @@ class CsvRowApp(App):
 
         self.root = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        self.action_buttons_container = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
+        self.action_buttons_container_top = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
+        self.action_buttons_container_bottom = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
+
 
         # Define new buttons
-        self.invites_button = Button(text="Inv", on_press=self.mark_invites, size_hint_y=None, height=80,
+
+        self.is_event_button = Button(text="Event", on_press=self.mark_is_event, size_hint_y=None, height=80,
                                      font_size='20sp')
-        self.date_button = Button(text="Dat", on_press=self.mark_date, size_hint_y=None, height=80, font_size='20sp')
-        self.location_button = Button(text="Loc", on_press=self.mark_location, size_hint_y=None, height=80,
+        self.invites_button = Button(text="Invites", on_press=self.mark_invites, size_hint_y=None, height=80,
+                                     font_size='20sp')
+        self.date_button = Button(text="Date", on_press=self.mark_date, size_hint_y=None, height=80, font_size='20sp')
+        self.time_button = Button(text="Time", on_press=self.mark_time, size_hint_y=None, height=80, font_size='20sp')
+
+        self.location_button = Button(text="Location", on_press=self.mark_location, size_hint_y=None, height=80,
                                       font_size='20sp')
-        self.loose_button = Button(text="Tun", on_press=self.mark_loose, size_hint_y=None, height=80,
-                                   font_size='20sp')
-        self.future_button = Button(text="Fut", on_press=self.mark_future, size_hint_y=None, height=80,
+        self.future_button = Button(text="Future", on_press=self.mark_future, size_hint_y=None, height=80,
                                     font_size='20sp')
 
         # Add new buttons to the container
-        for button in [self.invites_button, self.date_button, self.location_button, self.loose_button,
-                       self.future_button]:
-            self.action_buttons_container.add_widget(button)
+        for button in [self.is_event_button, self.invites_button, self.date_button]:
+            self.action_buttons_container_top.add_widget(button)
+        for button in [self.time_button, self.location_button, self.future_button]:
+            self.action_buttons_container_bottom.add_widget(button)
 
-
-
-
-        self.no_action_buttons_container = BoxLayout(size_hint_y=None, height=80)  # Adjusted height for more buttons
-
-        # Define new buttons
-        self.no_invites_button = Button(text="NoInv", on_press=self.no_mark_invites, size_hint_y=None, height=80,
-                                     font_size='20sp')
-        self.no_date_button = Button(text="NoDat", on_press=self.no_mark_date, size_hint_y=None, height=80, font_size='20sp')
-        self.no_location_button = Button(text="NoLoc", on_press=self.no_mark_location, size_hint_y=None, height=80,
-                                      font_size='20sp')
-        self.no_loose_button = Button(text="NoTun", on_press=self.no_mark_loose, size_hint_y=None, height=80,
-                                   font_size='20sp')
-        self.no_future_button = Button(text="NoFut", on_press=self.no_mark_future, size_hint_y=None, height=80,
-                                    font_size='20sp')
-
-        # Add new buttons to the container
-        for button in [self.no_invites_button, self.no_date_button, self.no_location_button, self.no_loose_button,
-                       self.no_future_button]:
-            self.no_action_buttons_container.add_widget(button)
 
         self.row_buttons_container = BoxLayout(size_hint_y=None, height=210)
         # Increased button height and font size
@@ -89,8 +75,8 @@ class CsvRowApp(App):
         self.scroll_view.add_widget(self.labels_container)
 
         self.root.add_widget(self.scroll_view)
-        self.root.add_widget(self.action_buttons_container)
-        self.root.add_widget(self.no_action_buttons_container)
+        self.root.add_widget(self.action_buttons_container_top)
+        self.root.add_widget(self.action_buttons_container_bottom)
         self.root.add_widget(self.row_buttons_container)
 
         self.update_labels(self.current_row)
@@ -108,94 +94,75 @@ class CsvRowApp(App):
             writer = csv.writer(file)
             writer.writerows(self.csv_data)
 
-    def mark_invites(self, instance):
+    def mark_is_event(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
             if len(self.csv_data[self.current_row]) < 5:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (5 - len(self.csv_data[self.current_row])))
-        self.csv_data[self.current_row][4] = "invites"
+        if self.csv_data[self.current_row][4] == "event":
+            self.csv_data[self.current_row][4] = "no_event"
+        else:
+            self.csv_data[self.current_row][4] = "event"
         self.update_csv()
         self.update_labels(self.current_row)
 
-    def mark_date(self, instance):
+    def mark_invites(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
             if len(self.csv_data[self.current_row]) < 6:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][5] = "date"
+            if self.csv_data[self.current_row][5] == "invites":
+                self.csv_data[self.current_row][5] = "no_invites"
+            else:
+                self.csv_data[self.current_row][5] = "invites"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+    def mark_date(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 7:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (7 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][6] == "date":
+                self.csv_data[self.current_row][6] = "no_date"
+            else:
+                self.csv_data[self.current_row][6] = "date"
+            self.update_csv()
+            self.update_labels(self.current_row)
+
+    def mark_time(self, instance):
+        if 0 <= self.current_row < len(self.csv_data):
+            if len(self.csv_data[self.current_row]) < 8:
+                # If so, extend the row with empty values up to the 8th column
+                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][7] == "time":
+                self.csv_data[self.current_row][7] = "no_time"
+            else:
+                self.csv_data[self.current_row][7] = "time"
             self.update_csv()
             self.update_labels(self.current_row)
 
     def mark_location(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 7:
+            if len(self.csv_data[self.current_row]) < 9:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (7 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][6] = "location"
-            self.update_csv()
-            self.update_labels(self.current_row)
-
-    def mark_loose(self, instance):
-        if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 8:
-                # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][7] = "stay tuned"
+                self.csv_data[self.current_row].extend([""] * (9 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][8] == "location":
+                self.csv_data[self.current_row][8] = "no_location"
+            else:
+                self.csv_data[self.current_row][8] = "location"
             self.update_csv()
             self.update_labels(self.current_row)
 
     def mark_future(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 9:
+            if len(self.csv_data[self.current_row]) < 10:
                 # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (9 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][8] = "future"
-            self.update_csv()
-            self.update_labels(self.current_row)
-
-
-    def no_mark_invites(self, instance):
-        if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 5:
-                # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (5 - len(self.csv_data[self.current_row])))
-        self.csv_data[self.current_row][4] = "no invites"
-        self.update_csv()
-        self.update_labels(self.current_row)
-
-    def no_mark_date(self, instance):
-        if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 6:
-                # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (6 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][5] = "no date"
-            self.update_csv()
-            self.update_labels(self.current_row)
-
-    def no_mark_location(self, instance):
-        if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 7:
-                # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (7 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][6] = "no location"
-            self.update_csv()
-            self.update_labels(self.current_row)
-
-    def no_mark_loose(self, instance):
-        if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 8:
-                # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (8 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][7] = "no stay tuned"
-            self.update_csv()
-            self.update_labels(self.current_row)
-
-    def no_mark_future(self, instance):
-        if 0 <= self.current_row < len(self.csv_data):
-            if len(self.csv_data[self.current_row]) < 9:
-                # If so, extend the row with empty values up to the 8th column
-                self.csv_data[self.current_row].extend([""] * (9 - len(self.csv_data[self.current_row])))
-            self.csv_data[self.current_row][8] = "no future"
+                self.csv_data[self.current_row].extend([""] * (10 - len(self.csv_data[self.current_row])))
+            if self.csv_data[self.current_row][9] == "future":
+                self.csv_data[self.current_row][9] = "no_future"
+            else:
+                self.csv_data[self.current_row][9] = "future"
             self.update_csv()
             self.update_labels(self.current_row)
 
