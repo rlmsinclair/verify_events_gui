@@ -9,10 +9,10 @@ import csv
 import re
 import webbrowser
 
-PATH_TO_CSV = '1000data.csv'  # Path to the csv file
+PATH_TO_CSV = 'ucl_lse_kcl_oxford_shuffled.csv'  # Path to the csv file
 ONLY_SHOW_ISEVENT = False  # This will only show instagram captions that at least one of the AIs thinks is an event
 HEIGHT_OF_BUTTONS = 200  # Change this if you have fat fingers
-COLUMN_TO_APPEND_TO_STARTS_AT = 5 # Change this if you are using a CSV with a different number of columns
+COLUMN_TO_APPEND_TO_STARTS_AT = 6 # Change this if you are using a CSV with a different number of columns
 
 class ClickableLabel(ButtonBehavior, Label):
     def __init__(self, **kwargs):
@@ -26,7 +26,7 @@ class CsvRowApp(App):
     def build(self):
         self.csv_file = PATH_TO_CSV  # Ensure this is the correct path to your CSV file
         self.csv_data = self.read_csv(self.csv_file)
-        self.current_row = 0
+        self.current_row = 1
         for i in range(len(self.csv_data)):
             try:
                 if self.csv_data[i][4] == 'event' or self.csv_data[i][4] == 'no_event':
