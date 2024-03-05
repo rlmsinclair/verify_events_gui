@@ -9,7 +9,7 @@ import csv
 import re
 import webbrowser
 
-PATH_TO_CSV = 'ucl_lse_kcl_oxford_shuffled.csv'  # Path to the csv file
+PATH_TO_CSV = 'oxford_cambridge_ucl_kcl_lse_shuffled.csv'  # Path to the csv file
 ONLY_SHOW_ISEVENT = False  # This will only show instagram captions that at least one of the AIs thinks is an event
 HEIGHT_OF_BUTTONS = 200  # Change this if you have fat fingers
 COLUMN_TO_APPEND_TO_STARTS_AT = 6 # Change this if you are using a CSV with a different number of columns
