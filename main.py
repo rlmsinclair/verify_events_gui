@@ -29,7 +29,7 @@ class CsvRowApp(App):
         self.current_row = 1
         for i in range(len(self.csv_data)):
             try:
-                if self.csv_data[i][4] == 'event' or self.csv_data[i][4] == 'no_event':
+                if self.csv_data[i][5] == 'event' or self.csv_data[i][5] == 'no_event':
                     self.current_row = i
             except:
                 pass
