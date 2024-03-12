@@ -44,22 +44,24 @@ class CsvRowApp(App):
 
         # Define new buttons
 
-        self.is_event_button = Button(text="Event", on_press=self.mark_is_event, size_hint_y=None, height=HEIGHT_OF_BUTTONS,
-                                     font_size='20sp')
-        self.invites_button = Button(text="Invites", on_press=self.mark_invites, size_hint_y=None, height=HEIGHT_OF_BUTTONS,
-                                     font_size='20sp')
+        self.is_promotes_button = Button(text="Promotes", on_press=self.mark_is_promotes, size_hint_y=None, height=HEIGHT_OF_BUTTONS,
+                                      font_size='20sp')
+        self.promotes_one_button = Button(text="PromotesOne", on_press=self.mark_promotes_one, size_hint_y=None, height=HEIGHT_OF_BUTTONS,
+                                          font_size='20sp')
         self.date_button = Button(text="Date", on_press=self.mark_date, size_hint_y=None, height=HEIGHT_OF_BUTTONS, font_size='20sp')
         self.time_button = Button(text="Time", on_press=self.mark_time, size_hint_y=None, height=HEIGHT_OF_BUTTONS, font_size='20sp')
 
         self.location_button = Button(text="Location", on_press=self.mark_location, size_hint_y=None, height=HEIGHT_OF_BUTTONS,
                                       font_size='20sp')
-        self.future_button = Button(text="Future", on_press=self.mark_future, size_hint_y=None, height=HEIGHT_OF_BUTTONS,
-                                    font_size='20sp')
+
+        self.flag_button = Button(text="Flag", on_press=self.mark_flag, size_hint_y=None,
+                                  height=HEIGHT_OF_BUTTONS,
+                                  font_size='20sp')
 
         # Add new buttons to the container
-        for button in [self.is_event_button, self.invites_button, self.date_button]:
+        for button in [self.is_promotes_button, self.promotes_one_button, self.date_button]:
             self.action_buttons_container_top.add_widget(button)
-        for button in [self.time_button, self.location_button, self.future_button]:
+        for button in [self.time_button, self.location_button, self.flag_button]:
             self.action_buttons_container_bottom.add_widget(button)
 
 
@@ -96,27 +98,27 @@ class CsvRowApp(App):
             writer = csv.writer(file)
             writer.writerows(self.csv_data)
 
-    def mark_is_event(self, instance):
+    def mark_is_promotes(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
             if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT - len(self.csv_data[self.current_row])))
-        if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] == "event":
-            self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] = "no_event"
+        if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] == "promotes":
+            self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] = "no_promotes"
         else:
-            self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] = "event"
+            self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT - 1] = "promotes"
         self.update_csv()
         self.update_labels(self.current_row)
 
-    def mark_invites(self, instance):
+    def mark_promotes_one(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
             if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+1:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 1 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] == "invites":
-                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] = "no_invites"
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] == "promotes_one":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] = "no_promotes_one"
             else:
-                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] = "invites"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT] = "promotes_one"
             self.update_csv()
             self.update_labels(self.current_row)
 
@@ -156,15 +158,15 @@ class CsvRowApp(App):
             self.update_csv()
             self.update_labels(self.current_row)
 
-    def mark_future(self, instance):
+    def mark_flag(self, instance):
         if 0 <= self.current_row < len(self.csv_data):
             if len(self.csv_data[self.current_row]) < COLUMN_TO_APPEND_TO_STARTS_AT+5:
                 # If so, extend the row with empty values up to the 8th column
                 self.csv_data[self.current_row].extend([""] * (COLUMN_TO_APPEND_TO_STARTS_AT + 5 - len(self.csv_data[self.current_row])))
-            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] == "future":
-                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] = "no_future"
+            if self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] == "flag":
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] = "no_flag"
             else:
-                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] = "future"
+                self.csv_data[self.current_row][COLUMN_TO_APPEND_TO_STARTS_AT + 4] = "flag"
             self.update_csv()
             self.update_labels(self.current_row)
 
